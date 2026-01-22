@@ -1,59 +1,65 @@
 import { useState } from 'react';
+import { ImageOff, Loader2 } from 'lucide-react';
 
 const ImageDisplay = ({ 
   src, 
   alt, 
   className = '', 
-  fallback = null,
-  onError = null,
+  aspectRatio = 'aspect-video', // Added for consistency
+  objectFit = 'object-cover',
+  fallbackIcon = <ImageOff className="w-8 h-8 opacity-20" />,
   ...props 
 }) => {
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleError = (e) => {
-    setHasError(true);
-    if (onError) onError(e);
-  };
-
-  const handleLoad = () => {
-    setIsLoading(false);
-  };
-
-  // If image has error and we have a fallback, show fallback
-  if (hasError && fallback) {
-    return (
-      <div className={`flex items-center justify-center bg-gray-100 ${className}`}>
-        {typeof fallback === 'string' && fallback.startsWith('data:image') ? (
-          <img 
-            src={fallback} 
-            alt={alt} 
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="text-center p-4">
-            <span className="text-4xl mb-2 block">{fallback}</span>
-            <span className="text-gray-600 text-sm">{alt}</span>
-          </div>
-        )}
-      </div>
-    );
-  }
-
   return (
-    <div className={`relative ${className}`}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
+    <div className={`relative overflow-hidden ${aspectRatio} ${className} bg-slate-100`}>
+      {/* Loading Shimmer Effect */}
+      {isLoading && !hasError && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-slate-100">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skeleton-shimmer" />
+          <Loader2 className="w-6 h-6 text-green-600 animate-spin opacity-20" />
+        </div>
       )}
-      <img
-        src={src}
-        alt={alt}
-        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
-        onError={handleError}
-        onLoad={handleLoad}
-        loading="lazy"
-        {...props}
-      />
+
+      {/* Error State */}
+      {hasError ? (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 border border-slate-100 p-4">
+          {fallbackIcon}
+          <p className="mt-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
+            {alt || 'Image Unavailable'}
+          </p>
+        </div>
+      ) : (
+        <img
+          src={src}
+          alt={alt}
+          className={`
+            w-full h-full ${objectFit} 
+            transition-all duration-700 ease-in-out
+            ${isLoading ? 'scale-110 blur-lg opacity-0' : 'scale-100 blur-0 opacity-100'}
+          `}
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setHasError(true);
+            setIsLoading(false);
+          }}
+          loading="lazy"
+          {...props}
+        />
+      )}
+
+      {/* CSS for the shimmer effect */}
+      <style jsx>{`
+        .skeleton-shimmer {
+          transform: translateX(-100%);
+          animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </div>
   );
 };

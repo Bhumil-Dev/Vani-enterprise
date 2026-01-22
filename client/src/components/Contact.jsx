@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, MessageSquare, Send, ShieldCheck, Zap } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
 const Contact = () => {
@@ -24,253 +24,181 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.open(
-      `https://wa.me/918511872920?text=Hi,%20my%20name%20is%20${formData.name}.%20${formData.message}`,
-      '_blank'
-    );
+    // Professional WhatsApp Message Template
+    const message = `*New Inquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Message:* ${formData.message}`;
+    window.open(`https://wa.me/918511872920?text=${message}`, '_blank');
     setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
-  const contactInfo = [
+  const contactItems = [
     {
       icon: Phone,
-      title: 'Phone',
-      details: ['+91 85118 72920', '+91 85118 72920'],
-      action: 'tel:+918511872920'
+      title: 'Call Us',
+      lines: ['+91 85118 72920', '+91 98765 43210'],
+      color: 'bg-green-50',
+      iconColor: 'text-green-600'
     },
     {
       icon: Mail,
-      title: 'Email',
-      details: ['info@vanienterprise.com', 'support@vanienterprise.com'],
-      action: 'mailto:info@vanienterprise.com'
+      title: 'Email Us',
+      lines: ['info@vanienterprise.com', 'vani.ent.vadodara@gmail.com'],
+      color: 'bg-blue-50',
+      iconColor: 'text-blue-600'
     },
     {
       icon: MapPin,
-      title: 'Location',
-      details: ['Gujarat Electric Board Area', 'Vadodara, Gujarat, India'],
-      action: 'https://maps.google.com'
-    },
-    {
-      icon: Clock,
-      title: 'Working Hours',
-      details: ['Mon-Sat: 8:00 AM - 8:00 PM', 'Emergency: 24/7 Available'],
-      action: null
+      title: 'Head Office',
+      lines: ['Gujarat Electric Board Area', 'Vadodara, Gujarat 390001'],
+      color: 'bg-orange-50',
+      iconColor: 'text-orange-600'
     }
   ];
 
   return (
-    <section
-      id="contact"
-      ref={ref}
-      className="section-padding bg-gray-50 overflow-hidden"
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="section-title">Contact Us</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Get in touch for professional RME maintenance services
+    <section id="contact" ref={ref} className="py-24 bg-white overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="max-w-3xl mb-16">
+          <h4 className="flex items-center gap-2 text-green-600 font-bold uppercase tracking-widest text-sm mb-4">
+            <Zap size={18} fill="currentColor" />
+            Reliable Energy Solutions
+          </h4>
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+            Ready to secure your <span className="text-green-600">Electrical Infrastructure?</span>
+          </h2>
+          <p className="text-lg text-slate-600">
+            Whether it's RMU maintenance or GEB compliance audits, our team is ready to serve across Gujarat.
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Info */}
-            <div
-              className={`
-                space-y-8  transition-all duration-500
-                ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'}
-              `}
-            >
-              <div>
-                <h3 className="text-2xl font-bold text-primary mb-6">
-                  Get In Touch
-                </h3>
-                <p className="text-gray-600 mb-8">
-                  Contact Vani-Enterprise for all your RME maintenance needs.
-                  We serve all Gujarat Electric Board facilities across the
-                  state.
-                </p>
-              </div>
-
-              {/* Info Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {contactInfo.map((info, index) => (
-                  <div
-                    key={info.title}
-                    className="bg-white p-6 rounded-xl border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary/10 p-3 rounded-lg">
-                        <info.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-primary mb-2">
-                          {info.title}
-                        </h4>
-                        {info.details.map((detail, idx) => (
-                          <p
-                            key={idx}
-                            className="text-gray-600 text-sm mb-1"
-                          >
-                            {detail}
-                          </p>
-                        ))}
-                        {info.action && (
-                          <a
-                            href={info.action}
-                            className="inline-block mt-2 text-primary text-sm font-medium"
-                          >
-                            Click to{' '}
-                            {info.title === 'Phone'
-                              ? 'Call'
-                              : info.title === 'Email'
-                              ? 'Email'
-                              : 'View'}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Emergency */}
-              <div className="bg-gradient-to-r from-primary to-primary-dark text-white p-6 rounded-2xl">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="bg-white/20 p-3 rounded-full">
-                    <Phone className="w-6 h-6" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Left Column: Info & Map */}
+          <div className={`lg:col-span-5 space-y-8 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            
+            <div className="grid grid-cols-1 gap-4">
+              {contactItems.map((item, i) => (
+                <div key={i} className="flex items-center gap-5 p-5 rounded-2xl border border-slate-100 hover:border-green-200 transition-colors bg-slate-50/50">
+                  <div className={`${item.color} ${item.iconColor} p-4 rounded-xl`}>
+                    <item.icon size={24} />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold">Emergency Support</h4>
-                    <p className="opacity-90">
-                      24/7 available for urgent maintenance
-                    </p>
+                    <h5 className="font-bold text-slate-900">{item.title}</h5>
+                    {item.lines.map((line, idx) => (
+                      <p key={idx} className="text-sm text-slate-500">{line}</p>
+                    ))}
                   </div>
                 </div>
-                <a
-                  href="tel:+918511872920"
-                  className="inline-flex items-center gap-2 bg-accent text-gray-900 font-bold px-6 py-3 rounded-lg"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call Emergency: +91 85118 72920
-                </a>
-              </div>
+              ))}
             </div>
 
-            {/* Form */}
-            <div
-              className={`
-                transition-all duration-500 delay-200
-                ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'}
-              `}
-            >
-              <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-                <div className="flex items-center gap-3 mb-6">
-                  <MessageSquare className="w-6 h-6 text-primary" />
-                  <h3 className="text-2xl font-bold text-primary">
-                    Send Message
-                  </h3>
+            {/* Live Google Map Placeholder - Vadodara Area */}
+            <div className="rounded-3xl overflow-hidden border-4 border-slate-50 shadow-xl h-72 relative group">
+               <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118147.68202052156!2d73.10304618353326!3d22.30715882670221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc8ab91a30abf%3A0x683967b5bd438466!2sVadodara%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                className="w-full h-full grayscale hover:grayscale-0 transition-all duration-700"
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-xl flex items-center gap-3">
+                <MapPin className="text-green-600" size={20} />
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">Serving All Gujarat Facilities</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <div className={`lg:col-span-7 transition-all duration-700 delay-300 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden text-white">
+              {/* Decorative BG element */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-green-600/10 rounded-full -mr-32 -mt-32 blur-3xl" />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="bg-green-600 p-3 rounded-2xl">
+                    <MessageSquare size={28} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">Direct Inquiry</h3>
+                    <p className="text-slate-400 text-sm italic">Response time: Usually within 2 hours</p>
+                  </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Full Name *
-                    </label>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="group">
+                    <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Full Name</label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
-                      placeholder="Enter your name"
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 outline-none focus:border-green-500 transition-all text-white placeholder:text-slate-600"
+                      placeholder="e.g. Rahul Sharma"
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Email Address
-                      </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="group">
+                      <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Email (Optional)</label>
                       <input
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
-                        placeholder="your@email.com"
+                        className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 outline-none focus:border-green-500 transition-all text-white placeholder:text-slate-600"
+                        placeholder="rahul@company.com"
                       />
                     </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Phone Number *
-                      </label>
+                    <div className="group">
+                      <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Phone Number</label>
                       <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
-                        placeholder="+91 85118 72920"
+                        className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 outline-none focus:border-green-500 transition-all text-white placeholder:text-slate-600"
+                        placeholder="+91 00000 00000"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Message *
-                    </label>
+                  <div className="group">
+                    <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Your Requirements</label>
                     <textarea
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       required
                       rows="4"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none resize-none"
-                      placeholder="Describe your RME maintenance requirements..."
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 outline-none focus:border-green-500 transition-all text-white placeholder:text-slate-600 resize-none"
+                      placeholder="Please describe the RME service or maintenance you need..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary-dark transition-all flex items-center justify-center gap-2"
+                    className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-5 px-8 rounded-2xl transition-all shadow-lg shadow-green-900/20 flex items-center justify-center gap-3 transform active:scale-95"
                   >
-                    <Send className="w-4 h-4" />
-                    Send via WhatsApp
+                    <Send size={20} />
+                    Start WhatsApp Chat
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center">
-                    By submitting, you agree to our terms. We will contact you on
-                    WhatsApp.
-                  </p>
+                  <div className="flex items-center justify-center gap-6 pt-4 text-slate-500">
+                    <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest">
+                      <ShieldCheck size={14} className="text-green-600" /> Secure
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest">
+                      <Clock size={14} className="text-green-600" /> 24/7 Support
+                    </div>
+                  </div>
                 </form>
               </div>
-
-              {/* Map */}
-              <div className="mt-8 bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <MapPin className="w-6 h-6 text-primary" />
-                  <h4 className="font-bold text-primary">
-                    Service Area
-                  </h4>
-                </div>
-                <div className="h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary/30 mx-auto mb-2" />
-                    <p className="text-gray-600">
-                      Serving all Gujarat Electric Board facilities
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      Across Gujarat State
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
-
           </div>
         </div>
       </div>
