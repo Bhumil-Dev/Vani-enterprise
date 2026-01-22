@@ -1,8 +1,9 @@
 // Image configuration for Vani-Enterprise website
+// Image configuration for Vani-Enterprise website
 
 export const heroImages = {
-  background: '/images/hero/image.png',
-  fallback: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="%231B5E20"/><text x="50%" y="50%" font-family="Arial" font-size="48" text-anchor="middle" fill="white">Vani-Enterprise</text><text x="50%" y="60%" font-family="Arial" font-size="24" text-anchor="middle" fill="white">GEB RME Maintenance Services</text></svg>'
+  background: "/images/hero/image.png",
+  fallback: "/images/hero/image.png",
 };
 
 export const aboutImages = {
